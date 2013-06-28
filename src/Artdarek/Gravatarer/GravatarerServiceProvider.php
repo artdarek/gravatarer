@@ -20,7 +20,7 @@ class GravatarerServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-		$this->package('artdarek/gravatarer');
+		//$this->package('artdarek/gravatarer');
 	}
 
 	/**
