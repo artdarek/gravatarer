@@ -4,15 +4,13 @@ class Gravatarer {
 
 	private $email = '';
 
-	private $size = '';	// defaults to 80px [ 1 - 2048 ]
+	private $size = '80';	// defaults to 80px [ 1 - 2048 ]
 
-	private $defaultImage = 'mm'; // Default imageset to use [ 404 | mm | identicon | monsterid | wavatar ]
+	private $default = 'mm'; // Default imageset to use [ 404 | mm | identicon | monsterid | wavatar ]
 
 	private $rating = 'g'; // Maximum rating (inclusive) [ g | pg | r | x ]
 
-	private $htmlImg =  false; // True to return a complete IMG tag False for just the URL
-	
-	private $hatmlAttributes =  array(); // True to return a complete IMG tag False for just the URL
+	private $gravatar = '';
 
 	/**
 	 * Constructor
@@ -44,6 +42,126 @@ class Gravatarer {
 	        $url .= ' />';
 	    }
 	    return $url;
+	}
+
+	/**
+	 * Set user email
+	 * 
+	 * @param  string $email
+	 * @return Gravatarer $this
+	 */
+	public function user( $email ) {
+
+		$this->email = $email;
+
+		$this->gravatar = $this->make();
+
+		return $this;
+	}
+
+	/**
+	 * Set size of avatar
+	 * defaults to 80px [ 1 - 2048 ]
+	 * 
+	 * @param  int $size
+	 * @return Gravatarer $this
+	 */
+	public function size( $size = '80' ) {
+		$this->size = $size;
+		$this->gravatar = $this->make();		
+		return $this;
+	}
+
+	/**
+	 * Set rating of avatar
+	 * Maximum rating (inclusive) [ g | pg | r | x ]
+	 * 
+	 * @param  string $size
+	 * @return Gravatarer $this
+	 */
+	public function rating( $rating = 'g') {
+		$this->rating = $rating;
+		
+		$this->gravatar = $this->make();		
+		return $this;
+	}
+
+	/**
+	 * Set defaut avatar image
+	 * Default imageset to use [ 404 | mm | identicon | monsterid | wavatar ]
+	 * 
+	 * @param  string $size
+	 * @return Gravatarer $this
+	 */
+	public function defaultImg( $default = 'mm') {
+		$this->default = $default;
+		
+		$this->gravatar = $this->make();		
+		return $this;
+	}
+
+	/**
+	 * Make url
+	 * 
+	 * @param  mixed $params
+	 * @return string $url
+	 */
+	public function make( $params = null ) {
+
+		// check if array has been passed 
+
+			if (is_array($params)) 
+			{
+				if ( isset($params['email']) ) $this->email = $params['email'];
+				if ( isset($params['size']) ) $this->size = $params['size'];
+				if ( isset($params['default']) ) $this->default = $params['default'];	
+				if ( isset($params['rating']) ) $this->rating = $params['rating'];
+			}
+			else 
+			{	
+				// if string was given assume that it is email
+				if ($params != null ) $this->email = $params;
+			}
+
+		// create gravatar url
+		    $url = 'http://www.gravatar.com/avatar/';
+		    $url .= md5( strtolower( trim( $this->email ) ) );
+		    $url .= "?s=".$this->size."&d=".$this->default."&r=".$this->rating;
+
+	    // save created gravatar
+		    $this->gavatar = $url;
+
+	    // return url 
+        	return $url;
+	}
+	
+	public function url() {
+    	return $this->gravatar;
+	}
+
+	/**
+	 * Htmlify 
+	 * 
+	 * @param  array  $attributes [description]
+	 * @return [type]             [description]
+	 */
+	public function html( $attributes = array() ) 
+	{
+
+		// make avatar url first
+			$url = $this->gravatar;
+
+		// make html code
+	        $html = '<img src="' . $url . '"';
+
+	        foreach ( $attributes as $key => $val ) {
+	            $html .= ' ' . $key . '="' . $val . '"';
+	        }
+
+	        $html .= ' />';
+
+        // return 
+        	return $html;
 	}
 
 }
