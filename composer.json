@@ -1,0 +1,28 @@
+{
+    "name": "artdarek/gravatarer",
+    "type": "library",    
+    "description": "Gravatar for Laravel 4.",
+    "keywords": ["Gravatar","Gravatar.com","Avatar","laravel","laravel4"],
+    "homepage": "https://github.com/artdarek/gravatarer",    
+    "license": "MIT",    
+    "authors": [
+        {
+            "name": "Artdarek",
+            "email": "artdarek@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "illuminate/support": "4.0.*"
+    },
+    "autoload": {
+        "classmap": [
+            "src/migrations"
+        ],
+        "psr-0": {
+            "Artdarek\\Gravatarer": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}
