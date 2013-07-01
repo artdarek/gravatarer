@@ -10,6 +10,9 @@ owners, developers, and users.
 
 ---
 
+- [Instalation](#instalation)
+- [Usage](#usage)
+
 ## Installation
 
 Add Gravatarer to your composer.json file:
