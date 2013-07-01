@@ -13,10 +13,10 @@ owners, developers, and users.
 - [Instalation](#instalation)
 - [Registering the Package](#registering-the-package)
 - [Usage](#usage)
--- [Generating gravatar url by user() method](#generating-gravatar-url-by-user-method)
--- [Generating gravatar url by make() method](#generating-gravatar-url-by-make-method)
--- [Generating HTM avatar code](#generating-htm-avatar-code)
--- [Usage: get() method (depreciated)](#usage-get-method-depreciated)
+- [Generating gravatar url by user() method](#generating-gravatar-url-by-user-method)
+- [Generating gravatar url by make() method](#generating-gravatar-url-by-make-method)
+- [Generating HTM avatar code](#generating-htm-avatar-code)
+- [Usage: get() method (depreciated)](#usage-get-method-depreciated)
 
 ## Installation
 
