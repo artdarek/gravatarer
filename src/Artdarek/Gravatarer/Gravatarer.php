@@ -2,14 +2,43 @@
 
 class Gravatarer {
 
+	/**
+	 * User email address
+	 * 
+	 * @var string
+	 */
 	private $email = '';
 
-	private $size = '80';	// defaults to 80px [ 1 - 2048 ]
+	/**
+	 * Size of avatar in pixels
+	 * defaults to 80px [ 1 - 2048 ]
+	 * 
+	 * @var string
+	 */
+	private $size = '80'
 
-	private $default = 'mm'; // Default imageset to use [ 404 | mm | identicon | monsterid | wavatar ]
+	/**
+	 * Default imageset to use
+	 * Url to your default avatar image or [ 404 | mm | identicon | monsterid | wavatar ]
+	 * defaults to 'mm'
+	 * 
+	 * @var string
+	 */
+	private $default = 'mm';
 
-	private $rating = 'g'; // Maximum rating (inclusive) [ g | pg | r | x ]
+	/**
+	 * Ratings
+	 * Maximum rating (inclusive) [ g | pg | r | x ]
+	 * 
+	 * @var string
+	 */
+	private $rating = 'g';
 
+	/**
+	 * Generated avatar is saved in this variable
+	 * 
+	 * @var string
+	 */
 	private $gravatar = '';
 
 	/**
@@ -18,31 +47,6 @@ class Gravatarer {
 	 * @return void
 	 */
 	public function __construct() { }
-
-	/**
-	 * Get either a Gravatar URL or complete image tag for a specified email address.
-	 *
-	 * @param string $email The email address
-	 * @param string $s Size in pixels, defaults to 80px [ 1 - 2048 ]
-	 * @param string $d Default imageset to use [ 404 | mm | identicon | monsterid | wavatar ]
-	 * @param string $r Maximum rating (inclusive) [ g | pg | r | x ]
-	 * @param boole $img True to return a complete IMG tag False for just the URL
-	 * @param array $atts Optional, additional key/value attributes to include in the IMG tag
-	 * @return String containing either just a URL or a complete image tag
-	 * @source http://gravatar.com/site/implement/images/php/
-	 */
-	public function get( $email, $s = 80, $d = 'mm', $r = 'g', $img = false, $atts = array() ) {
-	    $url = 'http://www.gravatar.com/avatar/';
-	    $url .= md5( strtolower( trim( $email ) ) );
-	    $url .= "?s=$s&d=$d&r=$r";
-	    if ( $img ) {
-	        $url = '<img src="' . $url . '"';
-	        foreach ( $atts as $key => $val )
-	            $url .= ' ' . $key . '="' . $val . '"';
-	        $url .= ' />';
-	    }
-	    return $url;
-	}
 
 	/**
 	 * Set user email
@@ -101,9 +105,12 @@ class Gravatarer {
 	}
 
 	/**
-	 * Make url
+	 * Make gravatar url
+	 * You can pass just email as a string to this method than
+	 * gravatar will be generated with default settings
+	 * or also u can pass more parameters as array (email|size|default|rating)
 	 * 
-	 * @param  mixed $params
+	 * @param  string|array $params 
 	 * @return string $url
 	 */
 	public function make( $params = null ) {
@@ -135,15 +142,24 @@ class Gravatarer {
         	return $url;
 	}
 	
+	/**
+	 * Get created gravatar url
+	 * 
+	 * @return string $gravatar
+	 */
 	public function url() {
-    	return $this->gravatar;
+
+		// get created gravatar
+			$gravatar = $this->gravatar;
+		// return gravatar
+    		return $gravatar;
 	}
 
 	/**
-	 * Htmlify 
+	 * Get html tag <img> with generated gravatar 
 	 * 
-	 * @param  array  $attributes [description]
-	 * @return [type]             [description]
+	 * @param array $attributes html attributes to add to generated code
+	 * @return string $html
 	 */
 	public function html( $attributes = array() ) 
 	{
@@ -162,6 +178,34 @@ class Gravatarer {
 
         // return 
         	return $html;
+	}
+
+
+	/** Depreciated ******************************************************************** */
+
+	/**
+	 * Get either a Gravatar URL or complete image tag for a specified email address.
+	 *
+	 * @param string $email The email address
+	 * @param string $s Size in pixels, defaults to 80px [ 1 - 2048 ]
+	 * @param string $d Default imageset to use [ 404 | mm | identicon | monsterid | wavatar ]
+	 * @param string $r Maximum rating (inclusive) [ g | pg | r | x ]
+	 * @param boole $img True to return a complete IMG tag False for just the URL
+	 * @param array $atts Optional, additional key/value attributes to include in the IMG tag
+	 * @return String containing either just a URL or a complete image tag
+	 * @source http://gravatar.com/site/implement/images/php/
+	 */
+	public function get( $email, $s = 80, $d = 'mm', $r = 'g', $img = false, $atts = array() ) {
+	    $url = 'http://www.gravatar.com/avatar/';
+	    $url .= md5( strtolower( trim( $email ) ) );
+	    $url .= "?s=$s&d=$d&r=$r";
+	    if ( $img ) {
+	        $url = '<img src="' . $url . '"';
+	        foreach ( $atts as $key => $val )
+	            $url .= ' ' . $key . '="' . $val . '"';
+	        $url .= ' />';
+	    }
+	    return $url;
 	}
 
 }
