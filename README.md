@@ -11,6 +11,7 @@ owners, developers, and users.
 ---
 
 - [Instalation](#instalation)
+- [Registering the Package](#registering-the-package)
 - [Usage](#usage)
 
 ## Installation
