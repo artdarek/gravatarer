@@ -94,3 +94,55 @@ U can aslo use some other parameters:
 
 ?>
 ```
+
+### Usage - make() method
+
+Basic way to generate gravatar url is just to call make() method with 
+user email address as a parameter (all other parameters will be loaded from defaults). 
+
+```
+<?php
+
+	// create a gravatar object for specified email
+ 	$gravatar = Gravatarer::make( $email );
+	 
+	 // get gravatar url as a string
+	$url = $gravatar->url();
+	
+	 // get gravatar <img> html code
+	$html = $gravatar->html();
+
+?>
+```
+
+U can aslo chain methods:
+
+```
+<?php
+
+	$url = Gravatarer::make( $email )->url();
+	
+?>
+```
+
+### Usage - user() method
+
+```
+<?php
+
+// user() method
+
+	// user email
+		$email = "example@user.email";
+	
+	// create a gravatar object for specified email
+	 	$gravatar = Gravatarer::user( $email );
+	 
+	 // get gravatar url as a string
+		$url = $gravatar->url();
+	
+	 // get gravatar <img> html code
+		$html = $gravatar->html();
+	
+?>
+```
