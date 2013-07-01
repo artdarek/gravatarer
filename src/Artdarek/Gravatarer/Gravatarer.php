@@ -15,7 +15,7 @@ class Gravatarer {
 	 * 
 	 * @var string
 	 */
-	private $size = '80'
+	private $size = '80';
 
 	/**
 	 * Default imageset to use
@@ -97,7 +97,7 @@ class Gravatarer {
 	 * @param  string $size
 	 * @return Gravatarer $this
 	 */
-	public function defaultImage( $defaultImage = 'mm') {
+	public function zdefaultImage( $defaultImage = 'mm') {
 		$this->defaultImage = $defaultImage;
 		
 		$this->gravatar = $this->make();		
