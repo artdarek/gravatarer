@@ -40,6 +40,8 @@ Add the Gravatarer Service Provider to your config in ``app/config/app.php``:
 
 ### Usage
 
+#### Usage: get() method (depreciated)
+
 To get url of avatar image just pass user email as a first and the only one parameter:
 
 ```
@@ -95,7 +97,7 @@ U can aslo use some other parameters:
 ?>
 ```
 
-### Usage - make() method
+#### Usage: make() method
 
 Basic way to generate gravatar url is just to call make() method with 
 user email address as a parameter (all other parameters will be loaded from defaults). 
@@ -125,7 +127,7 @@ U can aslo chain methods:
 ?>
 ```
 
-### Usage - user() method
+#### Usage - user() method
 
 ```
 <?php
