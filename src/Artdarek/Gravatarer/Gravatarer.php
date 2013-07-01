@@ -24,7 +24,7 @@ class Gravatarer {
 	 * 
 	 * @var string
 	 */
-	private $default = 'mm';
+	private $defaultImage = 'mm';
 
 	/**
 	 * Ratings
@@ -97,8 +97,8 @@ class Gravatarer {
 	 * @param  string $size
 	 * @return Gravatarer $this
 	 */
-	public function defaultImg( $default = 'mm') {
-		$this->default = $default;
+	public function defaultImage( $defaultImage = 'mm') {
+		$this->defaultImage = $defaultImage;
 		
 		$this->gravatar = $this->make();		
 		return $this;
@@ -116,12 +116,11 @@ class Gravatarer {
 	public function make( $params = null ) {
 
 		// check if array has been passed 
-
 			if (is_array($params)) 
 			{
 				if ( isset($params['email']) ) $this->email = $params['email'];
 				if ( isset($params['size']) ) $this->size = $params['size'];
-				if ( isset($params['default']) ) $this->default = $params['default'];	
+				if ( isset($params['defaultImage']) ) $this->defaultImage = $params['defaultImage'];	
 				if ( isset($params['rating']) ) $this->rating = $params['rating'];
 			}
 			else 
@@ -133,7 +132,7 @@ class Gravatarer {
 		// create gravatar url
 		    $url = 'http://www.gravatar.com/avatar/';
 		    $url .= md5( strtolower( trim( $this->email ) ) );
-		    $url .= "?s=".$this->size."&d=".$this->default."&r=".$this->rating;
+		    $url .= "?s=".$this->size."&d=".$this->defaultImage."&r=".$this->rating;
 
 	    // save created gravatar
 		    $this->gavatar = $url;
