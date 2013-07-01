@@ -15,7 +15,7 @@ class Gravatarer {
 	 * 
 	 * @var string
 	 */
-	private $size = '80';
+	private $size = 80;
 
 	/**
 	 * Default imageset to use
@@ -70,7 +70,7 @@ class Gravatarer {
 	 * @param  int $size
 	 * @return Gravatarer $this
 	 */
-	public function size( $size = '80' ) {
+	public function size( $size = 80 ) {
 		$this->size = $size;
 		$this->gravatar = $this->make();		
 		return $this;
@@ -97,7 +97,7 @@ class Gravatarer {
 	 * @param  string $size
 	 * @return Gravatarer $this
 	 */
-	public function zdefaultImage( $defaultImage = 'mm') {
+	public function defaultImage( $defaultImage = 'mm') {
 		$this->defaultImage = $defaultImage;
 		
 		$this->gravatar = $this->make();		
@@ -111,7 +111,7 @@ class Gravatarer {
 	 * or also u can pass more parameters as array (email|size|default|rating)
 	 * 
 	 * @param  string|array $params 
-	 * @return string $url
+	 * @return Gravatar $this
 	 */
 	public function make( $params = null ) {
 
@@ -135,10 +135,10 @@ class Gravatarer {
 		    $url .= "?s=".$this->size."&d=".$this->defaultImage."&r=".$this->rating;
 
 	    // save created gravatar
-		    $this->gavatar = $url;
+		    $this->gravatar = $url;
 
 	    // return url 
-        	return $url;
+        	return $this;
 	}
 	
 	/**
