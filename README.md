@@ -29,7 +29,7 @@ Add Gravatarer to your composer.json file:
 
 Use [composer](http://getcomposer.org) to install this package.
 
-    composer update
+	$ composer update
 
 ### Registering the Package
 
@@ -49,7 +49,7 @@ Add the Gravatarer Service Provider to your config in ``app/config/app.php``:
 Generating avatar with default settings is very simple and all you have to do is to call 
 ``user()`` method with user email as a paramterer:
 
-```
+```php
 <?php
 	// user email
 	$email = "example@user.email";
@@ -66,7 +66,7 @@ Generating avatar with default settings is very simple and all you have to do is
 If you want to customize avatar a little bit you can set some more parameters using additional methods 
 like ``size()``, ``rating()``, ``defaultImage()``. 
 
-```
+```php
 <?php
 	// user email
 	$email = "example@user.email";
@@ -94,7 +94,7 @@ like ``size()``, ``rating()``, ``defaultImage()``.
 
 U can also chain all methods:
 
-```
+```php
 <?php
  	$url = Gravatarer::user( $email )->size('220')->rating('g')->defaultImage('mm')->url();
 ?>
@@ -106,7 +106,7 @@ U can also chain all methods:
 Basic way to generate gravatar url is just to call ``make()`` method with 
 user email address as a parameter (all other parameters will be loaded from defaults). 
 
-```
+```php
 <?php
 	// user email
 	$email = "example@user.email";
@@ -122,7 +122,7 @@ user email address as a parameter (all other parameters will be loaded from defa
 
 U can aslo chain methods:
 
-```
+```php
 <?php
 	// to get url string
 	$url = Gravatarer::make( $email )->url();
@@ -132,7 +132,7 @@ U can aslo chain methods:
 If you want specify size of avatar or some other additional parameters you can do this 
 by passing array with parameters to ``make()`` method:
 
-```
+```php
 <?php
 	// user email
 	$email = "example@user.email";
@@ -156,7 +156,7 @@ by passing array with parameters to ``make()`` method:
 With Gravatarer you can get url string of user avatar by calling ``url()`` method 
 but also you can generate full html <img> code by calling ``html()`` method instead of ``url()``. 
 	
-```
+```php
 <?php
 	// user email
 	$email = "example@user.email";
@@ -172,7 +172,7 @@ but also you can generate full html <img> code by calling ``html()`` method inst
 If you want to have more controll over 
 the returned html code you can pass some additional html attributes to html() method, for examle:
 
-```
+```php
 <?php
 	$html = Gravatarer::user( $email )->html( ['class' => 'avatar', 'id' => 'user123' ] );
 ?>
