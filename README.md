@@ -10,7 +10,7 @@ owners, developers, and users.
 
 ---
 
-- [Instalation](#instalation)
+- [Installation](#installation)
 - [Registering the Package](#registering-the-package)
 - [Usage](#usage)
 - [Generating gravatar url by user() method](#generating-gravatar-url-by-user-method)
@@ -29,7 +29,9 @@ Add Gravatarer to your composer.json file:
 
 Use [composer](http://getcomposer.org) to install this package.
 
-	$ composer update
+```
+$ composer update
+```
 
 ### Registering the Package
 
