@@ -1,8 +1,5 @@
 # Gravatarer - Laravel 4 Service Provider
-Gravatarer is a simple Gravatar.com service provider for Laravel 4. 
-
----
-
+Gravatarer is a simple [Gravatar.com](http://gravatar.com/) service provider for Laravel 4. 
 A [Gravatar](http://gravatar.com/) is a Globally Recognized Avatar. You upload it and create 
 your profile just once, and then when you participate in any Gravatar-enabled site, your 
 Gravatar image will automatically follow you there. Gravatar is a free service for site 
