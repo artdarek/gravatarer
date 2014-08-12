@@ -4,7 +4,7 @@ class Gravatarer {
 
 	/**
 	 * User email address
-	 * 
+	 *
 	 * @var string
 	 */
 	private $email = '';
@@ -12,7 +12,7 @@ class Gravatarer {
 	/**
 	 * Size of avatar in pixels
 	 * defaults to 80px [ 1 - 2048 ]
-	 * 
+	 *
 	 * @var string
 	 */
 	private $size = 80;
@@ -21,7 +21,7 @@ class Gravatarer {
 	 * Default imageset to use
 	 * Url to your default avatar image or [ 404 | mm | identicon | monsterid | wavatar ]
 	 * defaults to 'mm'
-	 * 
+	 *
 	 * @var string
 	 */
 	private $defaultImage = 'mm';
@@ -29,14 +29,21 @@ class Gravatarer {
 	/**
 	 * Ratings
 	 * Maximum rating (inclusive) [ g | pg | r | x ]
-	 * 
+	 *
 	 * @var string
 	 */
 	private $rating = 'g';
 
 	/**
+	 * Secured (https)
+	 *
+	 * @var boolean
+	 */
+	private $secured = false;
+
+	/**
 	 * Generated avatar is saved in this variable
-	 * 
+	 *
 	 * @var string
 	 */
 	private $gravatar = '';
@@ -50,7 +57,7 @@ class Gravatarer {
 
 	/**
 	 * Set user email
-	 * 
+	 *
 	 * @param  string $email
 	 * @return Gravatarer $this
 	 */
@@ -66,41 +73,53 @@ class Gravatarer {
 	/**
 	 * Set size of avatar
 	 * defaults to 80px [ 1 - 2048 ]
-	 * 
+	 *
 	 * @param  int $size
 	 * @return Gravatarer $this
 	 */
 	public function size( $size = 80 ) {
 		$this->size = $size;
-		$this->gravatar = $this->make();		
+		$this->gravatar = $this->make();
 		return $this;
 	}
 
 	/**
 	 * Set rating of avatar
 	 * Maximum rating (inclusive) [ g | pg | r | x ]
-	 * 
+	 *
 	 * @param  string $size
 	 * @return Gravatarer $this
 	 */
 	public function rating( $rating = 'g') {
 		$this->rating = $rating;
-		
-		$this->gravatar = $this->make();		
+
+		$this->gravatar = $this->make();
 		return $this;
 	}
 
 	/**
 	 * Set defaut avatar image
 	 * Default imageset to use [ 404 | mm | identicon | monsterid | wavatar ]
-	 * 
+	 *
 	 * @param  string $size
 	 * @return Gravatarer $this
 	 */
 	public function defaultImage( $defaultImage = 'mm') {
 		$this->defaultImage = $defaultImage;
-		
-		$this->gravatar = $this->make();		
+
+		$this->gravatar = $this->make();
+		return $this;
+	}
+
+	/**
+	 * Set https
+	 *
+	 * @param  boolean
+	 * @return Gravatarer $this
+	 */
+	public function secured( $isSecured = false ) {
+		$this->secured = $isSecured;
+		$this->gravatar = $this->make();
 		return $this;
 	}
 
@@ -109,58 +128,72 @@ class Gravatarer {
 	 * You can pass just email as a string to this method than
 	 * gravatar will be generated with default settings
 	 * or also u can pass more parameters as array (email|size|default|rating)
-	 * 
-	 * @param  string|array $params 
+	 *
+	 * @param  string|array $params
 	 * @return Gravatar $this
 	 */
 	public function make( $params = null ) {
 
-		// check if array has been passed 
-			if (is_array($params)) 
+		// check if array has been passed
+			if (is_array($params))
 			{
 				if ( isset($params['email']) ) $this->email = $params['email'];
 				if ( isset($params['size']) ) $this->size = $params['size'];
-				if ( isset($params['defaultImage']) ) $this->defaultImage = $params['defaultImage'];	
+				if ( isset($params['defaultImage']) ) $this->defaultImage = $params['defaultImage'];
 				if ( isset($params['rating']) ) $this->rating = $params['rating'];
+				if ( isset($params['secured']) ) $this->secured = $params['secured'];
 			}
-			else 
-			{	
+			else
+			{
 				// if string was given assume that it is email
 				if ($params != null ) $this->email = $params;
 			}
 
 		// create gravatar url
-		    $url = 'http://www.gravatar.com/avatar/';
+		    $url = $this->getBaseUrl();
 		    $url .= md5( strtolower( trim( $this->email ) ) );
 		    $url .= "?s=".$this->size."&d=".$this->defaultImage."&r=".$this->rating;
 
 	    // save created gravatar
 		    $this->gravatar = $url;
 
-	    // return url 
+	    // return url
         	return $this;
 	}
-	
+
+	/**
+	 * Get base url
+	 *
+	 * @return string $url
+	 */
+	public function getBaseUrl()
+	{
+		if ($this->secured == true) $protocol = 'https:'; else $protocol = 'http:';
+		$url = $protocol.'//www.gravatar.com/avatar/';
+		return $url;
+	}
+
 	/**
 	 * Get created gravatar url
-	 * 
+	 *
 	 * @return string $gravatar
 	 */
 	public function url() {
 
 		// get created gravatar
 			$gravatar = $this->gravatar;
+
 		// return gravatar
     		return $gravatar;
 	}
 
 	/**
-	 * Get html tag <img> with generated gravatar 
-	 * 
+	 * Get html tag <img> with generated gravatar
+	 *
 	 * @param array $attributes html attributes to add to generated code
 	 * @return string $html
 	 */
-	public function html( $attributes = array() ) 
+	public function html( $attributes = array() )
 	{
 
 		// make avatar url first
@@ -175,7 +208,7 @@ class Gravatarer {
 
 	        $html .= ' />';
 
-        // return 
+        // return
         	return $html;
 	}
 
