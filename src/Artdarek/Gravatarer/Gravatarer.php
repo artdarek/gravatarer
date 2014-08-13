@@ -7,7 +7,7 @@ class Gravatarer {
 	 *
 	 * @var string
 	 */
-	private $email = '';
+	protected $_email = '';
 
 	/**
 	 * Size of avatar in pixels
@@ -15,7 +15,7 @@ class Gravatarer {
 	 *
 	 * @var string
 	 */
-	private $size = 80;
+	protected $_size = 80;
 
 	/**
 	 * Default imageset to use
@@ -24,7 +24,7 @@ class Gravatarer {
 	 *
 	 * @var string
 	 */
-	private $defaultImage = 'mm';
+	protected $_defaultImage = 'mm';
 
 	/**
 	 * Ratings
@@ -32,21 +32,22 @@ class Gravatarer {
 	 *
 	 * @var string
 	 */
-	private $rating = 'g';
+	protected $_rating = 'g';
 
 	/**
 	 * Secured (https)
+	 * If not set - autodetect
 	 *
 	 * @var boolean
 	 */
-	private $secured = false;
+	protected $_secured;
 
 	/**
-	 * Generated avatar is saved in this variable
+	 * Generated avatar url is saved in this variable
 	 *
 	 * @var string
 	 */
-	private $gravatar = '';
+	protected $_url = '';
 
 	/**
 	 * Constructor
@@ -61,12 +62,10 @@ class Gravatarer {
 	 * @param  string $email
 	 * @return Gravatarer $this
 	 */
-	public function user( $email ) {
-
-		$this->email = $email;
-
-		$this->gravatar = $this->make();
-
+	public function user( $email )
+	{
+		$this->_email = $email;
+		$this->_url = $this->make()->url();
 		return $this;
 	}
 
@@ -77,9 +76,10 @@ class Gravatarer {
 	 * @param  int $size
 	 * @return Gravatarer $this
 	 */
-	public function size( $size = 80 ) {
-		$this->size = $size;
-		$this->gravatar = $this->make();
+	public function size( $size = 80 )
+	{
+		$this->_size = $size;
+		$this->_url = $this->make()->url();
 		return $this;
 	}
 
@@ -90,10 +90,10 @@ class Gravatarer {
 	 * @param  string $size
 	 * @return Gravatarer $this
 	 */
-	public function rating( $rating = 'g') {
-		$this->rating = $rating;
-
-		$this->gravatar = $this->make();
+	public function rating( $rating = 'g')
+	{
+		$this->_rating = $rating;
+		$this->_url = $this->make()->url();
 		return $this;
 	}
 
@@ -104,10 +104,10 @@ class Gravatarer {
 	 * @param  string $size
 	 * @return Gravatarer $this
 	 */
-	public function defaultImage( $defaultImage = 'mm') {
-		$this->defaultImage = $defaultImage;
-
-		$this->gravatar = $this->make();
+	public function defaultImage( $defaultImage = 'mm')
+	{
+		$this->_defaultImage = $defaultImage;
+		$this->_url = $this->make()->url();
 		return $this;
 	}
 
@@ -117,9 +117,10 @@ class Gravatarer {
 	 * @param  boolean
 	 * @return Gravatarer $this
 	 */
-	public function secured( $isSecured = false ) {
-		$this->secured = $isSecured;
-		$this->gravatar = $this->make();
+	public function secured( $isSecured = false )
+	{
+		$this->_secured = $isSecured;
+		$this->_url = $this->make()->url();
 		return $this;
 	}
 
@@ -132,33 +133,33 @@ class Gravatarer {
 	 * @param  string|array $params
 	 * @return Gravatar $this
 	 */
-	public function make( $params = null ) {
-
+	public function make( $params = null )
+	{
 		// check if array has been passed
-			if (is_array($params))
-			{
-				if ( isset($params['email']) ) $this->email = $params['email'];
-				if ( isset($params['size']) ) $this->size = $params['size'];
-				if ( isset($params['defaultImage']) ) $this->defaultImage = $params['defaultImage'];
-				if ( isset($params['rating']) ) $this->rating = $params['rating'];
-				if ( isset($params['secured']) ) $this->secured = $params['secured'];
-			}
-			else
-			{
-				// if string was given assume that it is email
-				if ($params != null ) $this->email = $params;
-			}
+		if (is_array($params))
+		{
+			if ( isset($params['email']) ) $this->_email = $params['email'];
+			if ( isset($params['size']) ) $this->_size = $params['size'];
+			if ( isset($params['defaultImage']) ) $this->_defaultImage = $params['defaultImage'];
+			if ( isset($params['rating']) ) $this->_rating = $params['rating'];
+			if ( isset($params['secured']) ) $this->_secured = $params['secured'];
+		}
+		else
+		{
+			// if string was given assume that it is email
+			if ($params != null ) $this->_email = $params;
+		}
 
 		// create gravatar url
-		    $url = $this->getBaseUrl();
-		    $url .= md5( strtolower( trim( $this->email ) ) );
-		    $url .= "?s=".$this->size."&d=".$this->defaultImage."&r=".$this->rating;
+	    $url = $this->getBaseUrl();
+	    $url .= md5( strtolower( trim( $this->_email ) ) );
+	    $url .= "?s=".$this->_size."&d=".$this->_defaultImage."&r=".$this->_rating;
 
-	    // save created gravatar
-		    $this->gravatar = $url;
+	    // save created gravatar url
+	    $this->_url = $url;
 
 	    // return url
-        	return $this;
+    	return $this;
 	}
 
 	/**
@@ -168,23 +169,26 @@ class Gravatarer {
 	 */
 	public function getBaseUrl()
 	{
-		if ($this->secured == true) $protocol = 'https:'; else $protocol = 'http:';
+		if ($this->_secured === true) $protocol = 'https:';
+		elseif ($this->_secured === false) $protocol = 'http:';
+		else $protocol = '';
+
 		$url = $protocol.'//www.gravatar.com/avatar/';
 		return $url;
 	}
 
 	/**
-	 * Get created gravatar url
+	 * Get created gravatar url as a string
 	 *
 	 * @return string $gravatar
 	 */
-	public function url() {
-
+	public function url()
+	{
 		// get created gravatar
-			$gravatar = $this->gravatar;
+		$url = $this->_url;
 
 		// return gravatar
-    		return $gravatar;
+		return $url;
 	}
 
 	/**
@@ -195,49 +199,20 @@ class Gravatarer {
 	 */
 	public function html( $attributes = array() )
 	{
-
 		// make avatar url first
-			$url = $this->gravatar;
+		$url = $this->_url;;
 
 		// make html code
-	        $html = '<img src="' . $url . '"';
+        $html = '<img src="' . $url . '"';
 
-	        foreach ( $attributes as $key => $val ) {
-	            $html .= ' ' . $key . '="' . $val . '"';
-	        }
+        foreach ( $attributes as $key => $val ) {
+            $html .= ' ' . $key . '="' . $val . '"';
+        }
 
-	        $html .= ' />';
+        $html .= ' />';
 
         // return
-        	return $html;
-	}
-
-
-	/** Depreciated ******************************************************************** */
-
-	/**
-	 * Get either a Gravatar URL or complete image tag for a specified email address.
-	 *
-	 * @param string $email The email address
-	 * @param string $s Size in pixels, defaults to 80px [ 1 - 2048 ]
-	 * @param string $d Default imageset to use [ 404 | mm | identicon | monsterid | wavatar ]
-	 * @param string $r Maximum rating (inclusive) [ g | pg | r | x ]
-	 * @param boole $img True to return a complete IMG tag False for just the URL
-	 * @param array $atts Optional, additional key/value attributes to include in the IMG tag
-	 * @return String containing either just a URL or a complete image tag
-	 * @source http://gravatar.com/site/implement/images/php/
-	 */
-	public function get( $email, $s = 80, $d = 'mm', $r = 'g', $img = false, $atts = array() ) {
-	    $url = 'http://www.gravatar.com/avatar/';
-	    $url .= md5( strtolower( trim( $email ) ) );
-	    $url .= "?s=$s&d=$d&r=$r";
-	    if ( $img ) {
-	        $url = '<img src="' . $url . '"';
-	        foreach ( $atts as $key => $val )
-	            $url .= ' ' . $key . '="' . $val . '"';
-	        $url .= ' />';
-	    }
-	    return $url;
+    	return $html;
 	}
 
 }
