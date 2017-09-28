@@ -16,18 +16,10 @@ owners, developers, and users.
 
 ## Installation
 
-Add Gravatarer to your composer.json file:
+Use [composer](http://getcomposer.org) to install this package:
 
 ```
-"require": {
-  "artdarek/gravatarer": "dev-master"
-}
-```
-
-Use [composer](http://getcomposer.org) to install this package.
-
-```
-$ composer update
+$ composer require artdarek/gravatarer
 ```
 
 ### Registering the Package
